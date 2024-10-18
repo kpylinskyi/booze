@@ -1,6 +1,6 @@
 # Booze 🍻
 
-**Booze** is an intuitive graphical interface (GUI) designed to make managing Homebrew packages on macOS simple. It enables you to easily browse, install, update, and remove formulas and casks—all through a user-friendly dashboard. Booze also lets you **view all installed packages** and offers convenient **backup and restore** options to save your setup or quickly replicate it on a new machine. Whether you're new to Homebrew or an experienced user, Booze is **Your Friendly Homebrew Companion**, built to enhance and simplify your package management experience.
+**Booze** is an intuitive graphical interface designed to make managing Homebrew packages on macOS simple. It enables you to easily browse, install, update, and remove formulas and casks—all through a user-friendly dashboard. Booze also lets you **view all installed packages** and offers convenient **backup and restore** options to save your setup or quickly replicate it on a new machine. Whether you're new to Homebrew or an experienced user, Booze is **Your Friendly Homebrew Companion**, built to enhance and simplify your package management experience.
 
 ## Features
 
