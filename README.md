@@ -58,6 +58,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### Join the Booze Community
 If you have any questions, feedback, or ideas, join us in the discussions or follow us on ...
+
 ---
 
 Booze - Your Friendly Homebrew Companion 🍻
