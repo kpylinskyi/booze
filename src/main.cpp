@@ -19,8 +19,7 @@ public:
         // Add button to window
         set_child(button);  // `set_child()` is for GTK4 instead of `add()` (GTK3)
 
-        // Show all children
-        show_all();
+        // No need to call show_all() in GTK4, widgets are shown by default
     }
 
 protected:
@@ -43,17 +42,19 @@ protected:
             c.wait();  // Wait for the process to finish
 
             // Display a message dialog with the result
-            Gtk::MessageDialog dialog(*this, "Homebrew Command Output", false, Gtk::MESSAGE_INFO);
-            dialog.set_secondary_text(output.str());
-            dialog.run();
+            auto dialog = Gtk::make_managed<Gtk::MessageDialog>("Homebrew Command Output");
+            dialog->set_secondary_text(output.str());
+            dialog->set_modal(true);  // Make it modal (optional)
+            dialog->show();           // In GTK4, you use `show()` instead of `run()`
         }
         catch (const std::exception &ex) {
             std::cerr << "Error executing process: " << ex.what() << std::endl;
 
             // Show error dialog in case of failure
-            Gtk::MessageDialog error_dialog(*this, "Error", false, Gtk::MESSAGE_ERROR);
-            error_dialog.set_secondary_text(ex.what());
-            error_dialog.run();
+            auto error_dialog = Gtk::make_managed<Gtk::MessageDialog>("Error");
+            error_dialog->set_secondary_text(ex.what());
+            error_dialog->set_modal(true);
+            error_dialog->show();
         }
     }
 
