@@ -49,7 +49,7 @@ Alternatively, you can download Booze from the releases page on this GitHub repo
 
 ## Contributing
 
-We welcome contributions! If you'd like to add features, fix bugs, or suggest improvements, feel free to open an issue or submit a pull request. Please check the `CONTRIBUTING.md` for more details.
+We welcome contributions! If you'd like to add features, fix bugs, or suggest improvements, feel free to open an issue or submit a pull request. Please check the [CONTRIBUTING](CONTRIBUTING.md) for more details.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
