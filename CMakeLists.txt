@@ -31,3 +31,9 @@ target_link_libraries(booze PRIVATE ${Boost_LIBRARIES})
 
 # Compile options
 target_compile_options(booze PRIVATE -Wall -Wextra -pedantic)
+
+# Set the configuration path
+set(CONFIG_DIR "${CMAKE_SOURCE_DIR}/config")
+
+# preprocessor definition for the config path
+target_compile_definitions(booze PRIVATE CONFIG_DIR="${CONFIG_DIR}")
