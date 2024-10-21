@@ -1,11 +1,13 @@
-#include "commands/install.hpp"
-#include "commands/uninstall.hpp"
+#include "core/package_manager.hpp"
+#include <memory>
 
 int main() {
-    auto install_command = InstallCommand("git");
-    std::cout << install_command.execute() << std::endl;
-    auto uninstall_command = UninstallCommand("git");
-    std::cout << uninstall_command.execute() << std::endl;
+    auto pm = PackageManager(std::make_shared<System>());
+
+    pm.removePackage("git");
+    pm.installPackage("git");
+    pm.upgradePackage("git");
+    pm.listInstalledPackages();
 
     return 0;
 }

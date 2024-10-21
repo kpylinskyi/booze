@@ -14,7 +14,9 @@ include_directories(${Boost_INCLUDE_DIRS})
 # Source files
 set(SOURCES
     src/main.cpp
-    src/commands/command.cpp
+    src/core/system.cpp
+    src/core/package.cpp
+    src/core/package_manager.cpp
 )
 
 # Include headers
