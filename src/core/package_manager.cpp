@@ -6,8 +6,8 @@ bool PackageManager::installPackage(const std::string& package_name) {
     return system->installPackage(package_name);
 }
 
-bool PackageManager::updatePackage(const std::string& package_name) {
-    return system->updatePackage(package_name);
+bool PackageManager::upgradePackage(const std::string& package_name) {
+    return system->upgradePackage(package_name);
 }
 
 bool PackageManager::removePackage(const std::string& package_name) {
@@ -17,17 +17,19 @@ bool PackageManager::removePackage(const std::string& package_name) {
 std::vector<Package> PackageManager::searchPackages(const std::string& query) {
     std::vector<Package> packages;
     std::vector<std::string> system_output = system->searchPackages(query);
+    // Parse system_output and populate packages as needed
     return packages;
 }
 
 std::vector<Package> PackageManager::listInstalledPackages() {
     std::vector<Package> packages;
     std::vector<std::string> system_output = system->listInstalledPackages();
+    // Parse system_output and populate packages as needed
     return packages;
 }
 
-PackageStatus PackageManager::getPackageStatus(const std::string& package_name) {
-    PackageStatus package_status;
-    std::string system_output = system->getPackageStatus(package_name);
-    return package_status;
+PackageStatus PackageManager::getPackageInfo(const std::string& package_name) {
+    std::string system_output = system->getPackageInfo(package_name);
+    // Process system_output and return the correct PackageStatus
+    return PackageStatus::NOT_FOUND;  // Example return value
 }

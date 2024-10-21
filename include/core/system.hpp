@@ -15,7 +15,7 @@ public:
 
     bool isPackageInstalled(const std::string &package_name);
     bool installPackage(const std::string &package_name);
-    bool updatePackage(const std::string &package_name);
+    bool upgradePackage(const std::string &package_name);
     bool removePackage(const std::string &package_name);
     std::vector<std::string> searchPackages(const std::string &query);
     std::vector<std::string> listInstalledPackages();

@@ -2,10 +2,11 @@
 
 Package::Package(
     const std::string& name, 
-    const std::string& version = "unknown", 
-    const std::vector<Package>& dependencies = {}, 
-    PackageStatus status = PackageStatus::NOT_FOUND) { }
-            
+    const std::string& version, 
+    const std::vector<Package>& dependencies, 
+    PackageStatus status) 
+    : name(name), version(version), dependencies(dependencies), status(status) { }
+           
 std::string Package::getName() const { return name; }
 std::string Package::getVersion() const { return version; } 
 std::vector<Package> Package::getDependencies() const { return dependencies;}
