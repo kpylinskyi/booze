@@ -65,8 +65,9 @@ bool System::populateConfig(const std::string &path) {
         {"package_manager", "brew"},
         {"managers", {
             {"brew", {
-                {"install", "brew install"},
                 {"update", "brew update"},
+                {"install", "brew install"},
+                {"upgrade", "brew upgrade"},
                 {"remove", "brew uninstall"},
                 {"search", "brew search"},
                 {"list", "brew list"},
@@ -146,8 +147,8 @@ bool System::installPackage(const std::string &package_name) {
     }
 }
 
-bool System::updatePackage(const std::string &package_name) {
-    std::string updateCommand = packageManagers[activePackageManager]["update"] + " " + package_name;
+bool System::upgradePackage(const std::string &package_name) {
+    std::string updateCommand = packageManagers[activePackageManager]["upgrade"] + " " + package_name;
     CommandResult result = execute(updateCommand);
 
     if (result.exit_code == 0) {

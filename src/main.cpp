@@ -1,9 +1,13 @@
-#include "core/system.hpp"
+#include "core/package_manager.hpp"
+#include <memory>
 
 int main() {
-    auto system = System();
+    auto pm = PackageManager(std::make_shared<System>());
 
-    system.installPackage("git");
+    pm.removePackage("git");
+    pm.installPackage("git");
+    pm.upgradePackage("git");
+    pm.listInstalledPackages();
 
     return 0;
 }
