@@ -19,7 +19,7 @@ public:
     bool removePackage(const std::string &package_name);
     std::vector<std::string> searchPackages(const std::string &query);
     std::vector<std::string> listInstalledPackages();
-    std::string getPackageStatus(const std::string &package_name);
+    std::string getPackageInfo(const std::string &package_name);
 
 private:
     CommandResult execute(const std::string &command);

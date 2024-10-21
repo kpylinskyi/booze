@@ -69,7 +69,8 @@ bool System::populateConfig(const std::string &path) {
                 {"update", "brew update"},
                 {"remove", "brew uninstall"},
                 {"search", "brew search"},
-                {"list_installed", "brew list"}
+                {"list", "brew list"},
+                {"info", "brew info"}
             }},
         }}
     };
@@ -125,7 +126,12 @@ bool System::readConfig(const std::string &path) {
     return true;
 }
 
-bool System::isPackageInstalled(const std::string &package_name) { }
+bool System::isPackageInstalled(const std::string &package_name) { 
+    std::string isInstalledCommand = packageManagers[activePackageManager]["list"] + " | grep " + package_name;
+    CommandResult result = execute(isInstalledCommand);
+
+    return false;
+}
 
 bool System::installPackage(const std::string &package_name) {
     std::string installCommand = packageManagers[activePackageManager]["install"] + " " + package_name;
@@ -141,8 +147,8 @@ bool System::installPackage(const std::string &package_name) {
 }
 
 bool System::updatePackage(const std::string &package_name) {
-    std::string installCommand = packageManagers[activePackageManager]["update"] + " " + package_name;
-    CommandResult result = execute(installCommand);
+    std::string updateCommand = packageManagers[activePackageManager]["update"] + " " + package_name;
+    CommandResult result = execute(updateCommand);
 
     if (result.exit_code == 0) {
         std::cout << result.stdout_str << "Package updated successfully.\n";
@@ -154,8 +160,8 @@ bool System::updatePackage(const std::string &package_name) {
 }
 
 bool System::removePackage(const std::string &package_name) {
-    std::string installCommand = packageManagers[activePackageManager]["remove"] + " " + package_name;
-    CommandResult result = execute(installCommand);
+    std::string removeCommand = packageManagers[activePackageManager]["remove"] + " " + package_name;
+    CommandResult result = execute(removeCommand);
 
     if (result.exit_code == 0) {
         std::cout << result.stdout_str << "Package removed successfully.\n";
@@ -166,9 +172,35 @@ bool System::removePackage(const std::string &package_name) {
     }
 }
 
-std::vector<std::string> System::searchPackages(const std::string &query) {}
-std::vector<std::string> System::listInstalledPackages() {}
-std::string System::getPackageStatus(const std::string &package_name) {}
+std::vector<std::string> System::searchPackages(const std::string &query) {
+    std::string searchCommand = packageManagers[activePackageManager]["search"];
+    CommandResult result = execute(searchCommand);
+
+    std::vector<std::string> results;
+
+    return results;
+}
+std::vector<std::string> System::listInstalledPackages() {
+    std::string listCommand = packageManagers[activePackageManager]["list"];
+    CommandResult result = execute(listCommand);
+
+    std::vector<std::string> results;
+
+    return results;
+}
+
+std::string System::getPackageInfo(const std::string &package_name) {
+    std::string infoCommand = packageManagers[activePackageManager]["info"];
+    CommandResult result = execute(infoCommand);
+
+    if (result.exit_code == 0) {
+        std::cout << result.stdout_str << "Package info fetched successfully.\n";
+        return result.stdout_str;
+    } else {
+        std::cerr << "Failed to fetch package info:\n" << result.stderr_str;
+        return result.stderr_str;
+    }
+}
 
 CommandResult System::execute(const std::string &command) {
     std::ostringstream output;
