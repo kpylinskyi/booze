@@ -14,7 +14,9 @@ include_directories(${Boost_INCLUDE_DIRS})
 # Source files
 set(SOURCES
     src/main.cpp
-    src/commands/command.cpp
+    src/core/system.cpp
+    # src/core/package.cpp
+    # src/core/package_manager.cpp
 )
 
 # Include headers
@@ -31,9 +33,3 @@ target_link_libraries(booze PRIVATE ${Boost_LIBRARIES})
 
 # Compile options
 target_compile_options(booze PRIVATE -Wall -Wextra -pedantic)
-
-# Set the configuration path
-set(CONFIG_DIR "${CMAKE_SOURCE_DIR}/config")
-
-# preprocessor definition for the config path
-target_compile_definitions(booze PRIVATE CONFIG_DIR="${CONFIG_DIR}")

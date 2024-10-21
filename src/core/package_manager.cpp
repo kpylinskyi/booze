@@ -31,7 +31,3 @@ PackageStatus PackageManager::getPackageStatus(const std::string& package_name) 
     std::string system_output = system->getPackageStatus(package_name);
     return package_status;
 }
-
-bool PackageManager::refreshPackageDatabase() {
-    return system->refreshPackageDatabase();
-}
