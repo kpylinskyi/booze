@@ -14,15 +14,25 @@ check_and_install() {
     fi
 }
 
-printf "${SUCCESS}"
-printf "\n=============================================\n"
-printf "=========== ${DC}PREPARING ENVIRONMENT${SUCCESS} ===========\n"
-printf "=============================================\n"
-printf "${DC}"
+if [ "$1" == "Q" ]; then
+    printf "${WARNING}"
+    printf "\n=============================================\n"
+    printf "============== ${DC}SKIPPING SETUP${WARNING} ===============\n"
+    printf "=============================================\n"
+    printf "${DC}"
+else
+    printf "${SUCCESS}"
+    printf "\n=============================================\n"
+    printf "=========== ${DC}PREPARING ENVIRONMENT${SUCCESS} ===========\n"
+    printf "=============================================\n"
+    printf "${DC}"
 
-# Check and install dependencies
-check_and_install "cmake"
-check_and_install "boost"
+    # Check and install dependencies
+    check_and_install "cmake"
+    check_and_install "boost"
+    check_and_install "pkg-config"
+    check_and_install "gtk4"
+fi
 
 printf "${SUCCESS}"
 printf "\n=============================================\n"

@@ -9,22 +9,30 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 # Enabling static linking for Boost library
 set(Boost_USE_STATIC_LIBS ON)
 
-# Ensure static linking by setting the linker flags (optional)
-set(CMAKE_EXE_LINKER_FLAGS "-static")
-
-# Boost process
+# Find Boost
 find_package(Boost 1.70 REQUIRED COMPONENTS process)
 
+# Include Boost directory
 include_directories(${Boost_INCLUDE_DIRS})
+
+# Find GTK 4
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GTK REQUIRED gtk4)
+
+# Include GTK directory
+include_directories(${GTK_INCLUDE_DIRS})
 
 # Add nlohmann-json
 include(FetchContent)
 FetchContent_Declare(
   json
   GIT_REPOSITORY https://github.com/nlohmann/json.git
-  GIT_TAG v3.11.2  # or any specific version you want to use
+  GIT_TAG v3.11.2
 )
 FetchContent_MakeAvailable(json)
+
+# Include nlohmann/json directory
+include_directories(${json_SOURCE_DIR}/single_include)
 
 # Source files
 set(SOURCES

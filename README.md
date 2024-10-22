@@ -36,14 +36,17 @@ Install Booze with a simple brew command:
 brew install booze
 ```
 
+Alternatively, you can download Booze from the releases page on this GitHub repository.
+
 ## Building from source:
 
 Run `build_booze.sh` with following command:
 ```bash
-zsh build_booze.sh
+chmod +x build_booze.sh
+./build_booze.sh
 ```
 
-Alternatively, you can download Booze from the releases page on this GitHub repository.
+**Argument `Q` can be used to skip dependecies installation**
 
 ## Getting Started
 
