@@ -1,7 +1,8 @@
 #include "core/package_manager.hpp"
 #include <memory>
+#include "gui/main_window.hpp"
 
-int main() {
+int main(int argc, char **argv) {
     auto pm = PackageManager(std::make_shared<System>());
 
     pm.removePackage("git");
@@ -9,5 +10,7 @@ int main() {
     pm.upgradePackage("git");
     pm.listInstalledPackages();
 
-    return 0;
+    auto app = Gtk::Application::create("org.gtkmm.examples.base");
+
+    return app->make_window_and_run<MainWindow>(argc, argv);
 }

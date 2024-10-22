@@ -32,6 +32,7 @@ else
     check_and_install "boost"
     check_and_install "pkg-config"
     check_and_install "gtk4"
+    check_and_install "gtkmm4"
 fi
 
 printf "${SUCCESS}"
