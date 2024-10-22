@@ -15,12 +15,13 @@ find_package(Boost 1.70 REQUIRED COMPONENTS process)
 # Include Boost directory
 include_directories(${Boost_INCLUDE_DIRS})
 
-# Find GTK 4
+# Find GTKMM
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(GTK REQUIRED gtk4)
+pkg_check_modules(GTKMM REQUIRED gtkmm-4.0)
 
-# Include GTK directory
-include_directories(${GTK_INCLUDE_DIRS})
+# Include GTKMM directory
+include_directories(${GTKMM_INCLUDE_DIRS})
+link_directories(${GTKMM_LIBRARY_DIRS})
 
 # Add nlohmann-json
 include(FetchContent)
@@ -40,6 +41,7 @@ set(SOURCES
     src/core/system.cpp
     src/core/package.cpp
     src/core/package_manager.cpp
+    src/gui/main_window.cpp
 )
 
 # Include headers
@@ -49,10 +51,10 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 add_executable(booze ${SOURCES})
 
 # Include directories for the target
-target_include_directories(booze PRIVATE ${PROJECT_SOURCE_DIR}/include)
+target_include_directories(booze PRIVATE ${PROJECT_SOURCE_DIR}/include ${GTKMM_INCLUDE_DIRS})
 
 # Link Boost libraries
-target_link_libraries(booze PRIVATE ${Boost_LIBRARIES})
+target_link_libraries(booze PRIVATE ${Boost_LIBRARIES} ${GTKMM_LIBRARIES})
 
 # Compile options
 target_compile_options(booze PRIVATE -Wall -Wextra -pedantic)
