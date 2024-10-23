@@ -69,6 +69,7 @@ generate(){
     printf "=============================================\n"
     printf "${DC}"
 
+    rm -rf ./build/
     cmake -S ./ -O build/
 }
 

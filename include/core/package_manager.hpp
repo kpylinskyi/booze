@@ -1,15 +1,15 @@
 #ifndef PACKAGE_MANAGER_HPP
 #define PACKAGE_MANAGER_HPP
 
-#include <memory> 
+#include <memory>
 #include <string>
 #include <vector>
 #include "core/package.hpp"
 #include "core/system.hpp"
 
-class PackageManager{
+class PackageManager {
 public:
-    PackageManager(std::shared_ptr<System> system);
+    static PackageManager& getInstance();
 
     bool isPackageInstalled(const std::string& package_name);
     bool installPackage(const std::string& package_name);
@@ -21,8 +21,17 @@ public:
 
     Package getPackageInfo(const std::string& package_name);
 
+    PackageManager(const PackageManager&) = delete;
+    PackageManager& operator=(const PackageManager&) = delete;
+
 private:
-    std::shared_ptr<System> system;
+    PackageManager() {}
+
+    bool handleCommandResult(CommandResult& result);
+
+    void parsePackagesFromSection(const std::string& line, std::vector<Package>& packages, const std::string& package_type);
+    void handlePackageSections(std::istringstream& stream, std::vector<Package>& packages);
+    void parsePackageInfo(const std::string& output, Package& package);
 };
 
 #endif
