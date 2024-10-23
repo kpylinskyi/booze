@@ -1,7 +1,6 @@
 #include <string>
 #include <vector>
-#include <map>
-
+#include <unordered_map>
 
 struct CommandResult {
     int exit_code;
@@ -13,25 +12,17 @@ class System {
 public:
     System();
 
-    bool isPackageInstalled(const std::string &package_name);
     bool installPackage(const std::string &package_name);
     bool upgradePackage(const std::string &package_name);
-    bool removePackage(const std::string &package_name);
-    std::vector<std::string> searchPackages(const std::string &query);
-    std::vector<std::string> listInstalledPackages();
-    std::string getPackageInfo(const std::string &package_name);
+    bool uninstallPackage(const std::string &package_name);
+    bool isPackageInstalled(const std::string &package_name);
+    bool searchPackages(const std::string &query, std::string& results);
+    bool listInstalledPackages(std::string& results);
+    bool getPackageInfo(const std::string &package_name, std::string& results);
 
 private:
-    CommandResult execute(const std::string &command);
-    bool fileExists(const std::string &path);
-    bool createConfigDirectory(const std::string &path);
-    bool initializeConfig();
-    bool readConfig(const std::string &path);
-    bool populateConfig(const std::string &path);
-
-    std::string configDirectory;
-    std::string configFileName;
-    std::string configFilePath; 
-    std::map<std::string, std::map<std::string, std::string>> packageManagers;
-    std::string activePackageManager; 
+    CommandResult execute(const std::string& command);
+    bool handleCommandResult(const CommandResult &result, const std::string& command);
+    bool executeAndHandle(const std::string &command);
+    bool executeAndCapture(const std::string &command, std::string& output);
 };
