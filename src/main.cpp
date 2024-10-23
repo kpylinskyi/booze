@@ -1,17 +1,33 @@
 #include "core/package_manager.hpp"
-#include <memory>
 #include <iostream>
-// #include "gui/main_window.hpp"
+
+#include <iostream>
+#include "core/package_manager.hpp"
 
 int main(int argc, char **argv) {
-    auto pm = PackageManager(std::make_shared<System>());
+    if (argc < 2) {
+        std::cerr << "Usage: " << argv[0] << " <package_name>" << std::endl;
+        return 1;
+    }
 
-    std::cout << pm.isPackageInstalled("git") << std::endl;
-    // pm.installPackage("git");
-    // pm.upgradePackage("git");
-    // pm.listInstalledPackages();
+    std::string package_name = argv[1];
 
-    // auto app = Gtk::Application::create("org.gtkmm.examples.base");
+    PackageManager& pm = PackageManager::getInstance();
 
-    // return app->make_window_and_run<MainWindow>(argc, argv);
+    Package package = pm.getPackageInfo(package_name);
+
+    std::cout << "Package Name: " << package.getName() << std::endl;
+    std::cout << "Version: " << package.getVersion() << std::endl;
+    std::cout << "Description: " << package.getDescription() << std::endl;
+    std::cout << "License: " << package.getLicense() << std::endl;
+
+    if (!package.getDependencies().empty()) {
+        for (const auto& dep : package.getDependencies()) {
+            std::cout << "Dependency: " << dep.getName() << ", Version: " << dep.getVersion() << std::endl;
+        }
+    } else {
+        std::cout << "No dependencies found." << std::endl;
+    }
+
+    return 0;
 }

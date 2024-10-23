@@ -43,9 +43,7 @@ include_directories(${json_SOURCE_DIR}/single_include)
 set(SOURCES
     src/main.cpp
     src/core/system.cpp
-    src/core/package.cpp
     src/core/package_manager.cpp
-    src/gui/main_window.cpp
 )
 
 # Include headers

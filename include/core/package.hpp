@@ -1,42 +1,39 @@
-// File: src/core/Package.h
-
 #ifndef PACKAGE_H
 #define PACKAGE_H
 
 #include <string>
 #include <vector>
 
-// Enum representing the package's current status
 enum class PackageStatus {
     INSTALLED,
-    AVAILABLE,
-    OUTDATED,
-    NOT_FOUND
+    NOT_INSTALLED
 };
 
 class Package {
 public:
     Package() = default;
-    Package(const std::string& name, 
-            const std::string& version = "unknown", 
-            const std::vector<Package>& dependencies = {}, 
-            PackageStatus status = PackageStatus::NOT_FOUND);
 
-    std::string getName() const;
-    std::string getVersion() const;
-    std::vector<Package> getDependencies() const;
-    PackageStatus getStatus() const;
+    void setName(const std::string& name) { _name = name; }
+    void setVersion(const std::string& version) { _version = version; }
+    void setDescription(const std::string& description) { _description = description; }
+    void setLicense(const std::string& license) { _license = license; }
+    void setStatus(PackageStatus status) { _status = status; }
+    void setDependencies(const std::vector<Package>& dependencies) { _dependencies = dependencies; }
 
-    void setName(const std::string& name);
-    void setVersion(const std::string& version);
-    void setDependencies(const std::vector<Package>& dependencies);
-    void setStatus(PackageStatus status);
+    std::string getName() const { return _name; }
+    std::string getVersion() const { return _version; }
+    std::string getDescription() const { return _description; }
+    std::string getLicense() const { return _license; }
+    std::vector<Package> getDependencies() const { return _dependencies; }
+    PackageStatus getStatus() const { return _status; }
 
 private:
-    std::string name;
-    std::string version;
-    std::vector<Package> dependencies;
-    PackageStatus status;
+    std::string _name;
+    std::string _version;
+    std::string _description;
+    std::string _license;
+    std::vector<Package> _dependencies;
+    PackageStatus _status;
 };
 
 #endif

@@ -4,25 +4,21 @@
 
 struct CommandResult {
     int exit_code;
-    std::string stdout_str;
-    std::string stderr_str;
+    std::string command;
+    std::string output;
+    std::string error;
 };
 
 class System {
 public:
-    System();
-
-    bool installPackage(const std::string &package_name);
-    bool upgradePackage(const std::string &package_name);
-    bool uninstallPackage(const std::string &package_name);
-    bool isPackageInstalled(const std::string &package_name);
-    bool searchPackages(const std::string &query, std::string& results);
-    bool listInstalledPackages(std::string& results);
-    bool getPackageInfo(const std::string &package_name, std::string& results);
+    static CommandResult installPackage(const std::string &package_name);
+    static CommandResult upgradePackage(const std::string &package_name);
+    static CommandResult uninstallPackage(const std::string &package_name);
+    static CommandResult isPackageInstalled(const std::string &package_name);
+    static CommandResult searchPackages(const std::string &query);
+    static CommandResult listInstalledPackages();
+    static CommandResult getPackageInfo(const std::string &package_name);
 
 private:
-    CommandResult execute(const std::string& command);
-    bool handleCommandResult(const CommandResult &result, const std::string& command);
-    bool executeAndHandle(const std::string &command);
-    bool executeAndCapture(const std::string &command, std::string& output);
+    static CommandResult execute(const std::string& command);
 };
