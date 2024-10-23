@@ -45,8 +45,7 @@ Run `build_booze.sh` with following command:
 chmod +x build_booze.sh
 ./build_booze.sh
 ```
-
-**Argument `Q` can be used to skip dependecies installation**
+Run `build_booze.sh --help` for more information.
 
 ## Getting Started
 
