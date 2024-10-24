@@ -17,7 +17,7 @@ public:
     void setVersion(const std::string& version) { _version = version; }
     void setDescription(const std::string& description) { _description = description; }
     void setLicense(const std::string& license) { _license = license; }
-    void setStatus(PackageStatus status) { _status = status; }
+    void setInstalled(bool installed) { _insalled = installed; }
     void setDependencies(const std::vector<Package>& dependencies) { _dependencies = dependencies; }
 
     std::string getName() const { return _name; }
@@ -25,7 +25,7 @@ public:
     std::string getDescription() const { return _description; }
     std::string getLicense() const { return _license; }
     std::vector<Package> getDependencies() const { return _dependencies; }
-    PackageStatus getStatus() const { return _status; }
+    bool getInstalled() const { return _insalled; }
 
 private:
     std::string _name;
@@ -33,7 +33,7 @@ private:
     std::string _description;
     std::string _license;
     std::vector<Package> _dependencies;
-    PackageStatus _status;
+    bool _insalled;
 };
 
 #endif
