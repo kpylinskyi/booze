@@ -145,7 +145,7 @@ void PackageManager::parsePackageInfo(const std::string& output, Package& packag
 
         // Parse installation status
         if (std::regex_search(line, match, installed_regex)) {
-            package.setStatus(match[1] == "Installed" ? PackageStatus::INSTALLED : PackageStatus::NOT_INSTALLED);
+            package.setInstalled(match[1] == "Installed" ? true : false);
             continue;
         }
 
