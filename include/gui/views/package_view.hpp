@@ -7,6 +7,10 @@ class PackageView
 public:
     PackageView(const std::string &name);
 
+    bool install();
+    bool uninstall();
+    bool upgrade();
+
     std::string getName() const { return _name; }
     std::string getVersion() const { return _version; }
     std::string getDescripttion() const { return _description; }
