@@ -44,6 +44,7 @@ set(SOURCES
     src/main.cpp
     src/core/system.cpp
     src/core/package_manager.cpp
+    src/gui/views/package_view.cpp
 )
 
 # Include headers
