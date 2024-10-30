@@ -13,7 +13,7 @@ public:
 
     std::string getName() const { return _name; }
     std::string getVersion() const { return _version; }
-    std::string getDescripttion() const { return _description; }
+    std::string getDescription() const { return _description; }
     std::string getLicense() const { return _license; }
     std::vector<PackageView> getDependencies() const { return _dependencies; }
 
@@ -29,4 +29,4 @@ private:
     std::string _license;
     std::vector<std::string> _dependencyNames;
     std::vector<PackageView> _dependencies;
-}
+};

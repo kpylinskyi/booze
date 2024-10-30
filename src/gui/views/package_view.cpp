@@ -20,16 +20,17 @@ bool PackageView::initialize(const std::string &name, int depth) {
             _dependencies.push_back(PackageView(dependencyName, depth - 1));
         }
     }
+    return true;
 }
 
 bool PackageView::install() {
-    _pm.installPackage(_name);
+    return _pm.installPackage(_name);
 }
 
 bool PackageView::uninstall() {
-    _pm.uninstallPackage(_name);
+    return _pm.uninstallPackage(_name);
 }
 
 bool PackageView::upgrade() {
-    _pm.upgradePackage(_name);
+    return _pm.upgradePackage(_name);
 }
