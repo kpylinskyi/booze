@@ -29,9 +29,9 @@ private:
 
     bool handleCommandResult(CommandResult& result);
 
-    void parsePackagesFromSection(const std::string& line, std::vector<Package>& packages, const std::string& package_type);
-    void handlePackageSections(std::istringstream& stream, std::vector<Package>& packages);
     void parsePackageInfo(const std::string& output, Package& package);
+    void handlePackageSections(std::istringstream& stream, std::vector<Package>& packages);
+    void parsePackagesFromSection(const std::string& line, std::vector<Package>& packages, const std::string& package_type);
 };
 
 #endif

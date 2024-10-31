@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "core/package_manager.hpp"
+#include "gui/views/package_view.hpp"
 
 int main(int argc, char **argv) {
     if (argc < 2) {
@@ -12,17 +13,15 @@ int main(int argc, char **argv) {
 
     std::string package_name = argv[1];
 
-    PackageManager& pm = PackageManager::getInstance();
+    auto pkg = PackageView(package_name);
 
-    Package package = pm.getPackageInfo(package_name);
+    std::cout << "Package Name: " << pkg.getName() << std::endl;
+    std::cout << "Version: " << pkg.getVersion() << std::endl;
+    std::cout << "Description: " << pkg.getDescription() << std::endl;
+    std::cout << "License: " << pkg.getLicense() << std::endl;
 
-    std::cout << "Package Name: " << package.getName() << std::endl;
-    std::cout << "Version: " << package.getVersion() << std::endl;
-    std::cout << "Description: " << package.getDescription() << std::endl;
-    std::cout << "License: " << package.getLicense() << std::endl;
-
-    if (!package.getDependencies().empty()) {
-        for (const auto& dep : package.getDependencies()) {
+    if (!pkg.getDependencies().empty()) {
+        for (const auto& dep : pkg.getDependencies()) {
             std::cout << "Dependency: " << dep.getName() << ", Version: " << dep.getVersion() << std::endl;
         }
     } else {

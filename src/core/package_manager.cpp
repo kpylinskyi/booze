@@ -123,7 +123,7 @@ void PackageManager::parsePackageInfo(const std::string& output, Package& packag
     std::regex dependencies_regex(R"(Required:\s*(.*))");
     std::regex installed_regex(R"((Not installed|Installed))");
 
-    std::vector<Package> dependencies;
+    std::vector<std::string> dependencies;
     bool in_dependencies_section = false;
 
     while (std::getline(stream, line)) {
@@ -145,7 +145,7 @@ void PackageManager::parsePackageInfo(const std::string& output, Package& packag
 
         // Parse installation status
         if (std::regex_search(line, match, installed_regex)) {
-            package.setStatus(match[1] == "Installed" ? PackageStatus::INSTALLED : PackageStatus::NOT_INSTALLED);
+            package.setInstalled(match[1] == "Installed" ? true : false);
             continue;
         }
 
@@ -172,7 +172,7 @@ void PackageManager::parsePackageInfo(const std::string& output, Package& packag
                         cleaned_dependency += ch;
                     }
                 }
-                dependencies.push_back(getPackageInfo(cleaned_dependency));
+                dependencies.push_back(cleaned_dependency);
             }
             package.setDependencies(dependencies);
             in_dependencies_section = false;
