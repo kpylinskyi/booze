@@ -25,4 +25,4 @@ private:
     std::map<Levels, LogLevel> _levels;
 
     std::string getCurrentTime() const;
-}
+};
