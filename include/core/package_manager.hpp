@@ -7,6 +7,8 @@
 #include "core/package.hpp"
 #include "core/system.hpp"
 
+enum class SectionType { None, General, Dependencies, Description };
+
 class PackageManager {
 public:
     static PackageManager& getInstance();

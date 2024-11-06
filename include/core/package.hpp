@@ -12,6 +12,7 @@ enum class PackageStatus {
 class Package {
 public:
     Package() = default;
+    // Package(const std::string& name);
 
     void setName(const std::string& name) { _name = name; }
     void setVersion(const std::string& version) { _version = version; }
