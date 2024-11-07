@@ -1,3 +1,6 @@
+#ifndef CORE_SYSTEM_HPP
+#define CORE_SYSTEM_HPP
+
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -22,3 +25,5 @@ public:
 private:
     static CommandResult execute(const std::string& command);
 };
+
+#endif

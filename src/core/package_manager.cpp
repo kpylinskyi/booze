@@ -1,13 +1,20 @@
 #include "core/package_manager.hpp"
+#include "parser/brew_parser.hpp"
 #include <iostream>
 #include <sstream>
 #include <regex>
 #include <cctype>
 
-PackageManager &PackageManager::getInstance()
+PackageManager &PackageManager::getInstance(std::shared_ptr<PackageManagerParser> parser)
 {
-    static PackageManager instance;
+    static PackageManager instance(parser);
     return instance;
+}
+
+PackageManager::PackageManager(std::shared_ptr<PackageManagerParser> parser) : _packageManagerParser(parser)
+{
+    if (!_packageManagerParser)
+        _packageManagerParser = std::make_shared<BrewParser>();
 }
 
 bool PackageManager::isPackageInstalled(const std::string &package_name)
@@ -40,10 +47,7 @@ std::vector<Package> PackageManager::searchPackages(const std::string &query)
     auto command_result = System::searchPackages(query);
 
     if (handleCommandResult(command_result))
-    {
-        std::istringstream stream(command_result.output);
-        handlePackageSections(stream, packages);
-    }
+        _packageManagerParser->ParseSearchResult(command_result, packages);
 
     return packages;
 }
@@ -54,24 +58,18 @@ std::vector<Package> PackageManager::listInstalledPackages()
     auto command_result = System::listInstalledPackages();
 
     if (handleCommandResult(command_result))
-    {
-        std::istringstream stream(command_result.output);
-        handlePackageSections(stream, packages);
-    }
+        _packageManagerParser->ParseInstalled(command_result, packages);
 
     return packages;
 }
 
 Package PackageManager::getPackageInfo(const std::string &package_name)
 {
-    Package package;
-    package.setName(package_name);
+    Package package(package_name);
     auto command_result = System::getPackageInfo(package_name);
 
     if (handleCommandResult(command_result))
-    {
-        parsePackageInfo(command_result.output, package);
-    }
+        _packageManagerParser->ParseInfo(command_result, package);
 
     return package;
 }
@@ -93,124 +91,4 @@ bool PackageManager::handleCommandResult(CommandResult &result)
               << result.output << "\n"
               << result.error << std::endl;
     return true;
-}
-
-// Helper function to parse packages from a section
-void PackageManager::parsePackagesFromSection(const std::string &line, std::vector<Package> &packages, const std::string &package_type)
-{
-    std::istringstream package_stream(line);
-    std::string package_name;
-    while (package_stream >> package_name)
-    {
-        packages.push_back(getPackageInfo(package_name));
-    }
-}
-
-// Helper function to handle different sections of package listings (formulae/casks)
-void PackageManager::handlePackageSections(std::istringstream &stream, std::vector<Package> &packages)
-{
-    std::string line;
-    bool in_formulae_section = false;
-    bool in_casks_section = false;
-
-    while (std::getline(stream, line))
-    {
-        if (line.find("==> Formulae") != std::string::npos)
-        {
-            in_formulae_section = true;
-            in_casks_section = false;
-            continue;
-        }
-        else if (line.find("==> Casks") != std::string::npos)
-        {
-            in_formulae_section = false;
-            in_casks_section = true;
-            continue;
-        }
-
-        if (in_formulae_section && !line.empty())
-        {
-            parsePackagesFromSection(line, packages, "formulae");
-        }
-        else if (in_casks_section && !line.empty())
-        {
-            parsePackagesFromSection(line, packages, "cask");
-        }
-    }
-}
-
-// Helper function to parse package details from output
-void PackageManager::parsePackageInfo(const std::string &output, Package &package)
-{
-    std::istringstream stream(output);
-    std::string line;
-    std::string pattern = "==> " + package.getName() + R"(:\s*(.*))";
-    std::regex version_regex(pattern);
-    std::regex license_regex(R"(License:\s*(.*))");
-    std::regex dependencies_regex(R"(Required:\s*(.*))");
-    std::regex installed_regex(R"((Not installed|Installed))");
-
-    std::vector<std::string> dependencies;
-    bool in_dependencies_section = false;
-
-    while (std::getline(stream, line))
-    {
-        std::smatch match;
-
-        // Parse package name and version
-        if (std::regex_search(line, match, version_regex))
-        {
-            package.setVersion(match[2]);
-            continue;
-        }
-
-        // Parse package description
-        if (line.find("==>") == std::string::npos && !package.getDescription().empty())
-        {
-            package.setDescription(package.getDescription() + line + " ");
-        }
-        else if (package.getDescription().empty() && line.find("==>") == std::string::npos)
-        {
-            package.setDescription(line);
-        }
-
-        // Parse installation status
-        if (std::regex_search(line, match, installed_regex))
-        {
-            package.setInstalled(match[1] == "Installed" ? true : false);
-            continue;
-        }
-
-        // Parse license
-        if (std::regex_search(line, match, license_regex))
-        {
-            package.setLicense(match[1]);
-            continue;
-        }
-
-        // Parse dependencies
-        if (line.find("==> Dependencies") != std::string::npos)
-        {
-            in_dependencies_section = true;
-            continue;
-        }
-
-        if (in_dependencies_section && std::regex_search(line, match, dependencies_regex))
-        {
-            std::istringstream dep_stream(match[1]);
-            std::string dependency;
-            while (std::getline(dep_stream, dependency, ','))
-            {
-                dependency.erase(dependency.find_last_not_of(" \t") + 1);
-                dependency.erase(0, dependency.find_first_not_of(" \t"));
-
-                if (!dependency.empty())
-                {
-                    dependencies.push_back(dependency);
-                }
-            }
-            package.setDependencies(dependencies);
-            in_dependencies_section = false;
-        }
-    }
-}
+};
