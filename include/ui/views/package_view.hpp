@@ -1,3 +1,7 @@
+#ifndef PACKAGE_VIEW_HPP
+#define PACKAGE_VIEW_HPP
+
+
 #include "core/package_manager.hpp"
 #include <string>
 #include <vector>
@@ -30,3 +34,5 @@ private:
     std::vector<std::string> _dependencyNames;
     std::vector<PackageView> _dependencies;
 };
+
+#endif

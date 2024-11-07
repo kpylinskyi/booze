@@ -1,9 +1,6 @@
 #include "core/package_manager.hpp"
+#include "ui/views/package_view.hpp"
 #include <iostream>
-
-#include <iostream>
-#include "core/package_manager.hpp"
-#include "gui/views/package_view.hpp"
 
 int main(int argc, char **argv) {
     if (argc < 2) {

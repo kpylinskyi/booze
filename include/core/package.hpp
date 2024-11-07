@@ -4,16 +4,17 @@
 #include <string>
 #include <vector>
 
-enum class PackageStatus {
-    INSTALLED,
-    NOT_INSTALLED
+enum class PackageType {
+    Formulae,
+    Cask
 };
 
 class Package {
 public:
     Package() = default;
-    // Package(const std::string& name);
+    Package(const std::string& name);
 
+    void setType(PackageType type) { _type = type; }
     void setName(const std::string& name) { _name = name; }
     void setVersion(const std::string& version) { _version = version; }
     void setDescription(const std::string& description) { _description = description; }
@@ -29,6 +30,7 @@ public:
     bool getInstalled() const { return _insalled; }
 
 private:
+    PackageType _type;
     std::string _name;
     std::string _version;
     std::string _description;

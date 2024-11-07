@@ -16,7 +16,7 @@ bool PackageView::initialize(const std::string &name, int depth) {
     _license = package.getLicense();
     _dependencyNames = package.getDependencies();
     if (depth > 0) {
-        for (const auto dependencyName : _dependencyNames) {
+        for (const auto& dependencyName : _dependencyNames) {
             _dependencies.push_back(PackageView(dependencyName, depth - 1));
         }
     }
