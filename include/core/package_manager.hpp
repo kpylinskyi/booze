@@ -82,6 +82,8 @@ public:
     PackageManager &operator=(const PackageManager &) = delete;
 
 private:
+    std::unordered_map<std::string, std::future<CommandResult>> tasks;
+
     /**
      * @brief Private constructor for the singleton pattern, initializing with a parser.
      * @param parser A shared pointer to a PackageManagerParser object for parsing package information.
@@ -96,8 +98,21 @@ private:
      * @return True if the command was successful, false otherwise.
      */
     bool handleCommandResult(CommandResult &result);
-    
-    std::unordered_map<std::string, std::future<CommandResult>> tasks;
+
+    template <typename Func>
+    bool executeSyncTask(Func &&func) {
+        CommandResult command_result = func();
+        return handleCommandResult(command_result);
+    }
+
+    template <typename Func>
+    std::future<bool> executeAsyncTask(const std::string &task_id, Func &&func) {
+        tasks[task_id] = func();
+        return std::async(std::launch::async, [this, task_id]() {
+            CommandResult command_result = tasks[task_id].get();
+            return handleCommandResult(command_result);
+        });
+    }
 };
 
 #endif // PACKAGE_MANAGER_HPP

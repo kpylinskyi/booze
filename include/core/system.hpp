@@ -36,7 +36,7 @@ public:
      * @return A CommandResult struct containing the result of the upgrade command.
      */
     static CommandResult upgradePackage(const std::string &package_name);
-    static std::future<CommandResult> upgradePackageAsync(std::string &package_name);
+    static std::future<CommandResult> upgradePackageAsync(const std::string &package_name);
 
     /**
      * @brief Uninstalls a specified package.

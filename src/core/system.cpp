@@ -21,7 +21,7 @@ CommandResult System::upgradePackage(const std::string &package_name)
     return execute("brew upgrade " + package_name);
 }
 
-std::future<CommandResult> System::upgradePackageAsync(std::string &package_name)
+std::future<CommandResult> System::upgradePackageAsync(const std::string &package_name)
 {
     return std::async(std::launch::async, execute, "brew upgrade " + package_name);
 }
