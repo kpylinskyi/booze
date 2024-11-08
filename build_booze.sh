@@ -5,7 +5,7 @@ WARNING='\033[0;33m'
 DC='\033[0m'
 
 # Default variable values
-version=1.0.1
+version=1.0.2
 output_file=""
 s_setup=false
 s_cmake=false
@@ -65,11 +65,20 @@ skip_setup(){
 generate(){
     printf "${SUCCESS}"
     printf "\n=============================================\n"
-    printf "========== ${DC}GENERATING BUILD FILES${SUCCESS} ===========\n"
+    printf "======== ${DC}DELETING PREVIOUS BUILD FILES${SUCCESS} ========\n"
     printf "=============================================\n"
     printf "${DC}"
 
     rm -rf ./build/
+
+    printf "${WARNING}✅ Previous build successfully removed. ${DC}\n"
+
+printf "${SUCCESS}"
+    printf "\n=============================================\n"
+    printf "========== ${DC}GENERATING BUILD FILES${SUCCESS} ===========\n"
+    printf "=============================================\n"
+    printf "${DC}"
+
     cmake -S ./ -O build/
 }
 
