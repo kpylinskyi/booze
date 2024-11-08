@@ -4,8 +4,5 @@ build:
 rebuild:
 	./build_booze.sh -B
 
-booze_nano:
-	./build/booze nano
-
-start:
-	./build/booze
+booze:
+	./build/booze $(wordlist 2, $(words $(MAKECMDGOALS)), $(MAKECMDGOALS))
