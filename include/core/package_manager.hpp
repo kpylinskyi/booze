@@ -17,10 +17,9 @@ class PackageManager
 public:
     /**
      * @brief Gets the singleton instance of PackageManager, initializing it if necessary.
-     * @param parser An optional shared pointer to a PackageManagerParser object.
      * @return A reference to the singleton instance of PackageManager.
      */
-    static PackageManager &getInstance(std::shared_ptr<PackageManagerParser> parser = nullptr);
+    static PackageManager &getInstance();
 
     /**
      * @brief Checks if a specified package is installed.

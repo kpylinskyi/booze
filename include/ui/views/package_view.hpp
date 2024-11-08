@@ -38,6 +38,12 @@ public:
     bool upgrade();
 
     /**
+     * @brief Gets the installation status of the package.
+     * @return True if the package installed, false otherwise.
+     */
+    bool getInstalled() const { return _installed; }
+
+    /**
      * @brief Gets the name of the package.
      * @return The name of the package.
      */

@@ -5,17 +5,13 @@
 #include <regex>
 #include <cctype>
 
-PackageManager &PackageManager::getInstance(std::shared_ptr<PackageManagerParser> parser)
+PackageManager &PackageManager::getInstance()
 {
-    static PackageManager instance(parser);
+    static PackageManager instance(std::make_shared<BrewParser>());
     return instance;
 }
 
-PackageManager::PackageManager(std::shared_ptr<PackageManagerParser> parser) : _packageManagerParser(parser)
-{
-    if (!_packageManagerParser)
-        _packageManagerParser = std::make_shared<BrewParser>();
-}
+PackageManager::PackageManager(std::shared_ptr<PackageManagerParser> parser) : _packageManagerParser(parser) { }
 
 bool PackageManager::isPackageInstalled(const std::string &package_name)
 {

@@ -14,6 +14,7 @@ int main(int argc, char **argv) {
 
     std::cout << "Package Name: " << pkg.getName() << std::endl;
     std::cout << "Version: " << pkg.getVersion() << std::endl;
+    std::cout << (pkg.getInstalled() ? "Insttalled" : "Not installed") << std::endl;
     std::cout << "Description: " << pkg.getDescription() << std::endl;
     std::cout << "License: " << pkg.getLicense() << std::endl;
 
