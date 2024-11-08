@@ -1,6 +1,7 @@
 #include "parser/brew_parser.hpp"
 #include <sstream>
 #include <regex>
+#include <unordered_set>
 
 void BrewParser::ParseInstalled(const CommandResult &command_result, std::vector<Package> &packages)
 {
@@ -35,7 +36,7 @@ void BrewParser::ParseInfo(const CommandResult &command_result, Package &package
             in_description_section = true;
             continue;
         }
-        
+
         if (in_description_section)
         {
             bool installed = line == "Installed";
@@ -63,9 +64,10 @@ void BrewParser::ParseInfo(const CommandResult &command_result, Package &package
             while (std::getline(dep_stream, dependency, ','))
             {
                 std::string cleaned_dependency;
+                const static std::unordered_set<char> allowed_chars{'-', '_', '.'};
                 std::copy_if(dependency.begin(), dependency.end(), std::back_inserter(cleaned_dependency),
                              [](char ch)
-                             { return std::isalnum(ch); });
+                             { return std::isalnum(ch) || allowed_chars.count(ch); });
 
                 dependencies.push_back(cleaned_dependency);
             }
