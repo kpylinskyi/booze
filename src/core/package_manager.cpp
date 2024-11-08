@@ -11,12 +11,16 @@ PackageManager &PackageManager::getInstance()
     return instance;
 }
 
-PackageManager::PackageManager(std::shared_ptr<PackageManagerParser> parser) : _packageManagerParser(parser) { }
+PackageManager::PackageManager(std::shared_ptr<PackageManagerParser> parser) : _packageManagerParser(parser) {}
 
 bool PackageManager::isPackageInstalled(const std::string &package_name)
 {
     auto command_result = System::isPackageInstalled(package_name);
     return handleCommandResult(command_result);
+}
+
+std::future<bool> PackageManager::isPackageInstalledAsync(const std::string &package_name)
+{
 }
 
 bool PackageManager::installPackage(const std::string &package_name)
@@ -25,16 +29,28 @@ bool PackageManager::installPackage(const std::string &package_name)
     return handleCommandResult(command_result);
 }
 
+std::future<bool> PackageManager::installPackageAsync(const std::string &package_name)
+{
+}
+
 bool PackageManager::upgradePackage(const std::string &package_name)
 {
     auto command_result = System::upgradePackage(package_name);
     return handleCommandResult(command_result);
 }
 
+std::future<bool> PackageManager::upgradePackageAsync(const std::string &package_name)
+{
+}
+
 bool PackageManager::uninstallPackage(const std::string &package_name)
 {
     auto command_result = System::uninstallPackage(package_name);
     return handleCommandResult(command_result);
+}
+
+std::future<bool> PackageManager::uninstallPackageAsync(const std::string &package_name)
+{
 }
 
 std::vector<Package> PackageManager::searchPackages(const std::string &query)
@@ -48,6 +64,10 @@ std::vector<Package> PackageManager::searchPackages(const std::string &query)
     return packages;
 }
 
+std::future<std::vector<Package>> PackageManager::searchPackagesAsync(const std::string &query)
+{
+}
+
 std::vector<Package> PackageManager::listInstalledPackages()
 {
     std::vector<Package> packages;
@@ -59,6 +79,10 @@ std::vector<Package> PackageManager::listInstalledPackages()
     return packages;
 }
 
+std::future<std::vector<Package>> PackageManager::listInstalledPackagesAsync()
+{
+}
+
 Package PackageManager::getPackageInfo(const std::string &package_name)
 {
     Package package(package_name);
@@ -68,6 +92,10 @@ Package PackageManager::getPackageInfo(const std::string &package_name)
         _packageManagerParser->ParseInfo(command_result, package);
 
     return package;
+}
+
+std::future<Package> PackageManager::getPackageInfoAsync(const std::string &package_name)
+{
 }
 
 bool PackageManager::handleCommandResult(CommandResult &result)

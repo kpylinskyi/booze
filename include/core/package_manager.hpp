@@ -7,6 +7,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <future>
 
 /**
  * @class PackageManager
@@ -27,6 +28,7 @@ public:
      * @return True if the package is installed, false otherwise.
      */
     bool isPackageInstalled(const std::string &package_name);
+    std::future<bool> isPackageInstalledAsync(const std::string &package_name);
 
     /**
      * @brief Installs the specified package.
@@ -34,6 +36,7 @@ public:
      * @return True if the installation was successful, false otherwise.
      */
     bool installPackage(const std::string &package_name);
+    std::future<bool> installPackageAsync(const std::string &package_name);
 
     /**
      * @brief Upgrades the specified package to the latest version.
@@ -41,6 +44,7 @@ public:
      * @return True if the upgrade was successful, false otherwise.
      */
     bool upgradePackage(const std::string &package_name);
+    std::future<bool> upgradePackageAsync(const std::string &package_name);
 
     /**
      * @brief Uninstalls the specified package.
@@ -48,6 +52,7 @@ public:
      * @return True if the uninstallation was successful, false otherwise.
      */
     bool uninstallPackage(const std::string &package_name);
+    std::future<bool> uninstallPackageAsync(const std::string &package_name);
 
     /**
      * @brief Searches for packages matching the query.
@@ -55,12 +60,14 @@ public:
      * @return A vector of Package objects that match the query.
      */
     std::vector<Package> searchPackages(const std::string &query);
+    std::future<std::vector<Package>> searchPackagesAsync(const std::string &query);
 
     /**
      * @brief Lists all installed packages.
      * @return A vector of Package objects representing all installed packages.
      */
     std::vector<Package> listInstalledPackages();
+    std::future<std::vector<Package>> listInstalledPackagesAsync();
 
     /**
      * @brief Retrieves detailed information about a specified package.
@@ -68,6 +75,7 @@ public:
      * @return A Package object containing detailed information about the package.
      */
     Package getPackageInfo(const std::string &package_name);
+    std::future<Package> getPackageInfoAsync(const std::string &package_name);
 
     // Deleting copy constructor and assignment operator to enforce singleton pattern.
     PackageManager(const PackageManager &) = delete;
@@ -88,6 +96,8 @@ private:
      * @return True if the command was successful, false otherwise.
      */
     bool handleCommandResult(CommandResult &result);
+    
+    std::unordered_map<std::string, std::future<CommandResult>> tasks;
 };
 
 #endif // PACKAGE_MANAGER_HPP
