@@ -65,7 +65,7 @@ skip_setup(){
 generate(){
     printf "${SUCCESS}"
     printf "\n=============================================\n"
-    printf "======== ${DC}DELETING PREVIOUS BUILD FILES${SUCCESS} ========\n"
+    printf "======= ${DC}DELETING PREVIOUS BUILD FILES${SUCCESS} =======\n"
     printf "=============================================\n"
     printf "${DC}"
 
