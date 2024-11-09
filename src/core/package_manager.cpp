@@ -74,7 +74,8 @@ std::vector<Package> PackageManager::searchPackages(const std::string &query)
 
 std::future<std::vector<Package>> PackageManager::searchPackagesAsync(const std::string &query)
 {
-    return std::async(std::launch::async, [this, query]() {
+    return std::async(std::launch::async, [this, query]()
+                      {
         std::vector<Package> packages;
         auto command_result = System::searchPackages(query);
 
@@ -82,8 +83,7 @@ std::future<std::vector<Package>> PackageManager::searchPackagesAsync(const std:
             _packageManagerParser->ParseSearchResult(command_result, packages);
         }
 
-        return packages;
-    });
+        return packages; });
 }
 
 std::vector<Package> PackageManager::listInstalledPackages()
@@ -99,7 +99,8 @@ std::vector<Package> PackageManager::listInstalledPackages()
 
 std::future<std::vector<Package>> PackageManager::listInstalledPackagesAsync()
 {
-    return std::async(std::launch::async, [this]() {
+    return std::async(std::launch::async, [this]()
+                      {
         std::vector<Package> packages;
         auto command_result = System::listInstalledPackages();
 
@@ -107,8 +108,7 @@ std::future<std::vector<Package>> PackageManager::listInstalledPackagesAsync()
             _packageManagerParser->ParseInstalled(command_result, packages);
         }
 
-        return packages;
-    });
+        return packages; });
 }
 
 Package PackageManager::getPackageInfo(const std::string &package_name)
@@ -124,7 +124,8 @@ Package PackageManager::getPackageInfo(const std::string &package_name)
 
 std::future<Package> PackageManager::getPackageInfoAsync(const std::string &package_name)
 {
-    return std::async(std::launch::async, [this, package_name]() {
+    return std::async(std::launch::async, [this, package_name]()
+                      {
         Package package(package_name);
         auto command_result = System::getPackageInfo(package_name);
 
@@ -132,8 +133,7 @@ std::future<Package> PackageManager::getPackageInfoAsync(const std::string &pack
             _packageManagerParser->ParseInfo(command_result, package);
         }
 
-        return package;
-    });
+        return package; });
 }
 
 bool PackageManager::handleCommandResult(CommandResult &result)
@@ -154,3 +154,20 @@ bool PackageManager::handleCommandResult(CommandResult &result)
               << result.error << std::endl;
     return true;
 };
+
+template <typename Func>
+bool PackageManager::executeSyncTask(Func &&func)
+{
+    CommandResult command_result = func();
+    return handleCommandResult(command_result);
+}
+
+template <typename Func>
+std::future<bool> PackageManager::executeAsyncTask(const std::string &task_id, Func &&func)
+{
+    tasks[task_id] = func();
+    return std::async(std::launch::async, [this, task_id]()
+                      {
+            CommandResult command_result = tasks[task_id].get();
+            return handleCommandResult(command_result); });
+}
