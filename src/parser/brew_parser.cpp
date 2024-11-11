@@ -3,22 +3,23 @@
 #include <regex>
 #include <unordered_set>
 
-void BrewParser::ParseInstalled(const CommandResult &command_result, std::vector<Package> &packages)
+std::vector<Package> BrewParser::ParseInstalled(const CommandResult &command_result)
 {
-    ParsePackageList(command_result, packages);
+    return ParsePackageList(command_result);
 };
 
-void BrewParser::ParseSearchResult(const CommandResult &command_result, std::vector<Package> &packages)
+std::vector<Package> BrewParser::ParseSearchResult(const CommandResult &command_result)
 {
-    ParsePackageList(command_result, packages);
+    return ParsePackageList(command_result);
 };
 
-void BrewParser::ParseInfo(const CommandResult &command_result, Package &package)
+Package BrewParser::ParseInfo(const CommandResult &command_result)
 {
+    Package package;
     std::istringstream stream(command_result.output);
     std::string line;
-    std::string version_pattern = "==> " + package.getName() + R"(:\s*(.*))";
-    std::regex version_regex(version_pattern);
+    std::string name_version_pattern = R"(==>\s*(.*?)\s*:\s*(.*))";
+    std::regex name_version_regex(name_version_pattern);
     std::regex from_regex(R"(From:\s*(.*))");
     std::regex license_regex(R"(License:\s*(.*))");
     std::regex dependencies_regex(R"(Required:\s*(.*))");
@@ -30,9 +31,10 @@ void BrewParser::ParseInfo(const CommandResult &command_result, Package &package
     {
         std::smatch match;
 
-        if (std::regex_search(line, match, version_regex))
+        if (std::regex_search(line, match, name_version_regex))
         {
-            package.setVersion(match[1]);
+            package.setName(match[1]);
+            package.setVersion(match[2]);
             in_description_section = true;
             continue;
         }
@@ -74,10 +76,13 @@ void BrewParser::ParseInfo(const CommandResult &command_result, Package &package
             package.setDependencies(dependencies);
         }
     }
+
+    return package;
 };
 
-void BrewParser::ParsePackageList(const CommandResult &command_result, std::vector<Package> &packages)
+std::vector<Package> BrewParser::ParsePackageList(const CommandResult &command_result)
 {
+    std::vector<Package> packages;
     std::istringstream stream(command_result.output);
     std::string line;
     int section = 0;
@@ -110,4 +115,6 @@ void BrewParser::ParsePackageList(const CommandResult &command_result, std::vect
             }
         }
     }
+
+    return packages;
 };

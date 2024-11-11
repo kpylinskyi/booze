@@ -1,0 +1,54 @@
+---
+# Use LLVM style as a base, or switch to other styles like Google, Chromium, etc.
+BasedOnStyle: LLVM
+
+# Basic code alignment and formatting options
+IndentWidth: 4              # Indentation width (typically 2 or 4)
+TabWidth: 4                 # Width of a tab character
+UseTab: Never               # Use spaces for indentation (set to "Always" or "ForIndentation" if you prefer tabs)
+
+# Include styling
+IncludeBlocks: Preserve     # Keep existing line breaks between includes
+SortIncludes: false         # Don't sort #includes (use 'true' for automatic sorting)
+
+# Formatting options for braces
+BraceWrapping:
+  AfterClass: false
+  AfterControlStatement: true
+  AfterFunction: true
+  AfterNamespace: false
+  BeforeCatch: true
+  BeforeElse: true
+  IndentBraces: false
+
+# Control of function declarations
+AlignTrailingComments: true # Align trailing comments
+AllowShortFunctionsOnASingleLine: None # Control short function formatting
+
+# Formatting options for spaces and padding
+SpaceBeforeParens: ControlStatements # Only add space before parentheses in control statements (if, for, etc.)
+SpacesInParentheses: false           # Don't add spaces inside parentheses
+SpacesInSquareBrackets: false        # Don't add spaces inside square brackets
+SpaceInEmptyParentheses: false       # No space between empty parentheses in function calls
+SpaceBeforeRangeBasedForLoopColon: true
+
+# Indentation options for parameters
+AlignAfterOpenBracket: Align         # Align parameters after open bracket
+BinPackParameters: true              # Control how parameters are aligned
+
+# Pointer and reference alignment
+PointerAlignment: Left               # Align pointers and references to the type (e.g., int* ptr)
+
+# C++11/14/17/20 feature-specific settings
+DerivePointerAlignment: false        # Disable automatic pointer alignment
+IndentCaseLabels: true               # Indent case labels in switch statements
+
+# Column limits
+ColumnLimit: 100                     # Maximum column width for wrapping lines
+
+# Additional custom options
+BreakBeforeBraces: Allman            # Style for brace placement (Stroustrup, Linux, etc., are other options)
+AllowShortIfStatementsOnASingleLine: false # Break if statements across lines
+SortUsingDeclarations: true          # Sort using declarations
+ReflowComments: true                 # Automatically format/reflow long comments
+---

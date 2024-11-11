@@ -14,7 +14,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(Boost_USE_STATIC_LIBS ON)
 
 # Find Boost
-find_package(Boost 1.70 REQUIRED COMPONENTS process)
+find_package(Boost 1.70 REQUIRED COMPONENTS system process)
 
 # Include Boost directory
 include_directories(${Boost_INCLUDE_DIRS})
@@ -48,6 +48,7 @@ link_directories(${GTKMM_LIBRARY_DIRS})
 # Source files
 set(SOURCES
     src/main.cpp
+    src/core/thread_pool.cpp
     src/core/system.cpp
     src/core/package.cpp
     src/core/package_manager.cpp

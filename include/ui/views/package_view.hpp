@@ -82,8 +82,7 @@ private:
      * @param depth The dependency depth to retrieve.
      * @return True if initialization was successful, false otherwise.
      */
-    bool initializeAsync(const std::string &name, int depth = 1);
-    bool initializeSync(const std::string &name, int depth = 1);
+    bool initialize(const std::string &name, int depth = 1);
 
     bool _installed;                          /**< Installation status of the package. */
     std::string _name;                        /**< The name of the package. */

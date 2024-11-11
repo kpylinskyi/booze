@@ -1,4 +1,4 @@
-build:
+project:
 	./build_booze.sh
 
 rebuild:
