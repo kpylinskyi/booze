@@ -27,24 +27,6 @@ pkg_check_modules(GTKMM REQUIRED gtkmm-4.0)
 include_directories(${GTKMM_INCLUDE_DIRS})
 link_directories(${GTKMM_LIBRARY_DIRS})
 
-# Add nlohmann-json
-
-# find_package(nlohmann_json 3.11.2 REQUIRED)
-# target_link_libraries(booze PRIVATE nlohmann_json::nlohmann_json)
-
-# OR
-
-# include(FetchContent)
-# FetchContent_Declare(
-#   json
-#   GIT_REPOSITORY https://github.com/nlohmann/json.git
-#   GIT_TAG v3.11.2
-# )
-# FetchContent_MakeAvailable(json)
-
-# Include nlohmann/json directory
-# include_directories(${json_SOURCE_DIR}/single_include)
-
 # Source files
 set(SOURCES
     src/main.cpp
@@ -53,7 +35,7 @@ set(SOURCES
     src/core/package_manager.cpp
     src/parser/package_manager_parser.cpp
     src/parser/brew_parser.cpp
-    src/ui/views/package_view.cpp
+    src/views/package_view.cpp
 )
 
 # Include headers
