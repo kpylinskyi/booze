@@ -1,4 +1,4 @@
-#include "views/package_view.hpp"
+#include "ui/views/package_view.hpp"
 #include "core/package.hpp"
 #include <iostream>
 #include <future>

@@ -1,5 +1,5 @@
 #include "core/package_manager.hpp"
-#include "views/package_view.hpp"
+#include "ui/views/package_view.hpp"
 #include <iostream>
 
 int main(int argc, char **argv) {
