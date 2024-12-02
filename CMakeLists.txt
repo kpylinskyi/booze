@@ -53,7 +53,7 @@ set(SOURCES
     src/core/package_manager.cpp
     src/parser/package_manager_parser.cpp
     src/parser/brew_parser.cpp
-    src/ui/views/package_view.cpp
+    src/views/package_view.cpp
 )
 
 # Include headers
