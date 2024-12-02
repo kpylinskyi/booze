@@ -13,6 +13,11 @@
 class PackageManagerParser {
 public:
     /**
+     * @brief Virtual destructor to ensure proper cleanup of derived objects.
+     */
+    virtual ~PackageManagerParser() = default;
+
+    /**
      * @brief Parses the result of an installed packages command.
      * @param command_result The command result containing installed packages information.
      * @param packages A vector to store the parsed installed packages.

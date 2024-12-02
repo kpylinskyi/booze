@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <future>
 
 /**
  * @struct CommandResult
@@ -28,13 +29,14 @@ public:
      * @return A CommandResult struct containing the result of the install command.
      */
     static CommandResult installPackage(const std::string &package_name);
-
+    static std::future<CommandResult> installPackageAsync(const std::string &package_name);
     /**
      * @brief Upgrades a specified package to the latest version.
      * @param package_name The name of the package to upgrade.
      * @return A CommandResult struct containing the result of the upgrade command.
      */
     static CommandResult upgradePackage(const std::string &package_name);
+    static std::future<CommandResult> upgradePackageAsync(const std::string &package_name);
 
     /**
      * @brief Uninstalls a specified package.
@@ -42,6 +44,7 @@ public:
      * @return A CommandResult struct containing the result of the uninstall command.
      */
     static CommandResult uninstallPackage(const std::string &package_name);
+    static std::future<CommandResult> uninstallPackageAsync(const std::string &package_name);
 
     /**
      * @brief Checks if a specified package is installed.
@@ -49,6 +52,7 @@ public:
      * @return A CommandResult struct containing the result of the check command.
      */
     static CommandResult isPackageInstalled(const std::string &package_name);
+    static std::future<CommandResult> isPackageInstalledAsync(const std::string &package_name);
 
     /**
      * @brief Searches for packages that match the query.
@@ -56,12 +60,14 @@ public:
      * @return A CommandResult struct containing the result of the search command.
      */
     static CommandResult searchPackages(const std::string &query);
+    static std::future<CommandResult> searchPackagesAsync(const std::string &query);
 
     /**
      * @brief Lists all installed packages.
      * @return A CommandResult struct containing the result of the list installed packages command.
      */
     static CommandResult listInstalledPackages();
+    static std::future<CommandResult> listInstalledPackagesAsync();
 
     /**
      * @brief Retrieves detailed information about a specified package.
@@ -69,6 +75,7 @@ public:
      * @return A CommandResult struct containing the result of the information retrieval command.
      */
     static CommandResult getPackageInfo(const std::string &package_name);
+    static std::future<CommandResult> getPackageInfoAsync(const std::string &package_name);
 
 private:
     /**

@@ -1,6 +1,7 @@
 #include "parser/brew_parser.hpp"
 #include <sstream>
 #include <regex>
+#include <unordered_set>
 
 void BrewParser::ParseInstalled(const CommandResult &command_result, std::vector<Package> &packages)
 {
@@ -23,7 +24,6 @@ void BrewParser::ParseInfo(const CommandResult &command_result, Package &package
     std::regex dependencies_regex(R"(Required:\s*(.*))");
 
     std::vector<std::string> dependencies;
-    int line_num = 0;
     bool in_description_section = false;
 
     while (std::getline(stream, line))
@@ -33,35 +33,41 @@ void BrewParser::ParseInfo(const CommandResult &command_result, Package &package
         if (std::regex_search(line, match, version_regex))
         {
             package.setVersion(match[1]);
-            ++line_num;
             in_description_section = true;
             continue;
         }
 
-        if (line.find("Installed") != std::string::npos){
-            package.setInstalled(true);
-            in_description_section = false;
-        } else if (line.find("Not installed") != std::string::npos) {
-            package.setInstalled(false);
-            in_description_section = false;
+        if (in_description_section)
+        {
+            bool installed = line == "Installed";
+            bool not_installed = line == "Not installed";
+
+            if (installed || not_installed)
+            {
+                package.setInstalled(installed);
+                in_description_section = false;
+            }
         }
 
         if (in_description_section)
             package.setDescription(package.getDescription() + "\n" + line);
-        
-        if (std::regex_search(line, match, license_regex)){
+
+        if (std::regex_search(line, match, license_regex))
+        {
             package.setLicense(match[1]);
         }
 
-        if (std::regex_search(line, match, dependencies_regex)){
+        if (std::regex_search(line, match, dependencies_regex))
+        {
             std::istringstream dep_stream(match[1]);
             std::string dependency;
             while (std::getline(dep_stream, dependency, ','))
             {
                 std::string cleaned_dependency;
+                const static std::unordered_set<char> allowed_chars{'-', '_', '.'};
                 std::copy_if(dependency.begin(), dependency.end(), std::back_inserter(cleaned_dependency),
                              [](char ch)
-                             { return std::isalnum(ch); });
+                             { return std::isalnum(ch) || allowed_chars.count(ch); });
 
                 dependencies.push_back(cleaned_dependency);
             }
