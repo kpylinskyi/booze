@@ -19,7 +19,9 @@ class Logger
 public:
     static Logger &getInstance(const std::string &filename = "default.log");
 
-    void log(LOG_LVL level, const std::string &message);
+    void log(LOG_LVL log_lvl, const std::string &message);
+
+    std::string log_lvl_to_string(LOG_LVL log_lvl);
 
 private:
     std::ofstream _log_file; /**< The file stream used for writing log messages to a file. */
