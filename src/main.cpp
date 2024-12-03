@@ -1,12 +1,17 @@
 #include "core/package_manager.hpp"
 #include "views/package_view.hpp"
 #include <iostream>
+#include "logger/logger.hpp"
 
 int main(int argc, char **argv) {
     if (argc < 2) {
         std::cerr << "Usage: " << argv[0] << " <package_name>" << std::endl;
         return 1;
     }
+
+    Logger::getInstance().log(LOG_LVL::INF, "Yoy");
+    Logger::getInstance().log(LOG_LVL::WRN, "Yoy");
+    Logger::getInstance().log(LOG_LVL::ERR, "Yoy");
 
     std::string package_name = argv[1];
 

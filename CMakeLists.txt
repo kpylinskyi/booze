@@ -54,6 +54,13 @@ set(SOURCES
     src/parser/package_manager_parser.cpp
     src/parser/brew_parser.cpp
     src/views/package_view.cpp
+    src/logger/logger.cpp 
+    src/logger/log_factory.cpp
+    src/logger/log_level.cpp
+    src/logger/log/log.cpp
+    src/logger/log/info_log.cpp
+    src/logger/log/error_log.cpp
+    src/logger/log/warning_log.cpp
 )
 
 # Include headers

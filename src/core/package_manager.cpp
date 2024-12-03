@@ -4,6 +4,7 @@
 #include <sstream>
 #include <regex>
 #include <cctype>
+#include "logger/logger.hpp"
 
 PackageManager &PackageManager::getInstance(std::shared_ptr<PackageManagerParser> parser)
 {
@@ -78,17 +79,19 @@ bool PackageManager::handleCommandResult(CommandResult &result)
 {
     if (result.exit_code != 0)
     {
-        std::cerr << "Command: " << result.command << "\n"
-                  << "Error executing command:\n"
-                  << result.output << "\n"
-                  << "Exit code: " << result.exit_code << "\n"
-                  << result.error << std::endl;
+        Logger::getInstance().log(LOG_LVL::ERR, 
+                   "Command: " + result.command + "\n" +
+                   "Error executing command:\n" + result.output + "\n" +
+                   "Exit code: " + std::to_string(result.exit_code) + "\n" +
+                   result.error);
+
         return false;
     }
 
-    std::cout << "Command: " << result.command << "\n"
-              << "Command executed successfully:\n"
-              << result.output << "\n"
-              << result.error << std::endl;
+    Logger::getInstance().log(LOG_LVL::INF, 
+               "Command: " + result.command + "\n" +
+               "Command executed successfully:\n" + result.output + "\n" +
+               result.error);
+
     return true;
-};
+}
