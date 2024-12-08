@@ -67,6 +67,8 @@ public:
      */
     std::vector<PackageView> getDependencies() const { return _dependencies; }
 
+    std::string toString() const;
+
 private:
     PackageManager &_pm;                      /**< Reference to the PackageManager instance to manage packages. */
 
