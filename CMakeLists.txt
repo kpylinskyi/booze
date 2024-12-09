@@ -48,14 +48,10 @@ link_directories(${GTKMM_LIBRARY_DIRS})
 # Source files
 set(SOURCES
     src/main.cpp
-    src/core/system.cpp
-    src/core/package.cpp
-    src/core/package_manager.cpp
-    src/parser/package_manager_parser.cpp
-    src/parser/brew_parser.cpp
-    src/views/package_view.cpp
-    src/views/package_manager_view.cpp
-    src/logger/logger.cpp 
+    src/core/cmd/cmd.cpp
+    src/core/pkg.cpp         # Add the source file where Package is implemented
+    src/core/tasks.cpp
+    src/logger/logger.cpp
     src/logger/log_factory.cpp
     src/logger/log_level.cpp
     src/logger/log/log.cpp

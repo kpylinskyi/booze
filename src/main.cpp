@@ -1,14 +1,28 @@
-#include "core/package_manager.hpp"
-#include "views/package_manager_view.hpp"
-#include "logger/logger.hpp"
-#include <memory>
+#include "core/pkg.h"
+#include "core/tasks.h"
+
 #include <iostream>
 
 int main() {
+    Package pkg("nano");
 
-    auto pm_view = std::make_shared<PackageManagerView>();
-    for(auto pkg: pm_view->list()){
-        Logger::getInstance().log(LOG_LVL::INF, pkg->toString());
+    pkg.isinstalled();
+    if (!pkg.getInstalled()) {
+        std::cout << "Package " << pkg.getName() << " is not installed. Installing...\n";
+        pkg.install();
+    }
+    pkg.info();
+    
+    if (pkg.getInstalledVersion() != pkg.getAvailableVersion()) {
+        std::cout << "Upgrading " << pkg.getName() << " to version " << pkg.getAvailableVersion() << "...\n";
+        pkg.upgrade();
+    }
+
+    std::cout << "Uninstalling " << pkg.getName() << "...\n";
+    pkg.uninstall();
+
+    while(true){
+        Tasks::getInstance().processPendingTasks();
     }
 
     return 0;

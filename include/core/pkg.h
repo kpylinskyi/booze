@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <future>
 
 /**
  * @enum PackageType
@@ -17,13 +18,15 @@
  */
 enum class PackageType
 {
+    Undefined,
+    Cask,
     Formulae,
-    Cask
 };
 
 class Package
 {
-    Package(const std::string &name);
+public:
+    Package(const std::string& name);
 
     void install();
     void isinstalled();
@@ -31,13 +34,13 @@ class Package
     void upgrade();
     void info();
 
-    const bool &getInstalled() const { installed_; }
-    const PackageType &getType() const { type_; }
-    const std::string &getName() const { name_; }
-    const std::string &getInstalledVersion() const { installed_version_; }
-    const std::string &getAvailableVersion() const { available_version_; }
-    const std::string &getDescription() const { description_; }
-    const std::string &getLicense() const { license_; }
+    const bool& getInstalled() const { return installed_; }
+    const PackageType& getType() const { return type_; }
+    const std::string& getName() const { return name_; }
+    const std::string& getInstalledVersion() const { return installed_version_; }
+    const std::string& getAvailableVersion() const { return available_version_; }
+    const std::string& getDescription() const { return description_; }
+    const std::string& getLicense() const { return license_; }
 
 private:
     bool installed_;
