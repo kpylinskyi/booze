@@ -19,13 +19,11 @@ find_package(Boost 1.70 REQUIRED COMPONENTS process)
 # Include Boost directory
 include_directories(${Boost_INCLUDE_DIRS})
 
-# Find GTKMM
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(GTKMM REQUIRED gtkmm-4.0)
+# Find QT6
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
-# Include GTKMM directory
-include_directories(${GTKMM_INCLUDE_DIRS})
-link_directories(${GTKMM_LIBRARY_DIRS})
+# QT6 Setup
+qt_standard_project_setup()
 
 # Add nlohmann-json
 
@@ -70,10 +68,16 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 add_executable(booze ${SOURCES})
 
 # Include directories for the target
-target_include_directories(booze PRIVATE ${PROJECT_SOURCE_DIR}/include ${GTKMM_INCLUDE_DIRS})
+target_include_directories(booze PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
 # Link Boost libraries
-target_link_libraries(booze PRIVATE ${Boost_LIBRARIES} ${GTKMM_LIBRARIES})
+target_link_libraries(booze PRIVATE ${Boost_LIBRARIES} Qt6::Widgets)
 
 # Compile options
 target_compile_options(booze PRIVATE -Wall -Wextra -pedantic)
+
+# Remove console windows app & creating app bundle for macOS
+set_target_properties(booze PROPERTIES
+        WIN32_EXECUTABLE ON
+        MACOSX_BUNDLE ON
+)
